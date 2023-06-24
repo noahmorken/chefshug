@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+    <head>
+        <title>Getting started: Handling For Submission</title>
+    </head>
+    <body>
+        <h1 th:inline="text">Hello <span th:remove="tag" sec:authentication="name">thymeleaf</span>!</h1>
+        <p>This is Noah's Website.</p>
+        <input type="button" value="Sign out" onclick="window.location='/user'"/>
+        <input type="button" value="List transactions" onclick="window.location='/demo/list'"/>
+        <input type="button" value="Add transaction" onclick="window.location='/demo/transaction'"/>
+    </body>
+</html>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zono.chefshug.dao.RecipeDao">
+
+    <resultMap id="recipeResultMap" type="com.zono.chefshug.model.Recipe">
+        <id property="id" column="recipe_id" />
+        <result property="variation" column="variation"/>
+        <result property="date" column="submission_date"/>
+        <result property="name" column="name"/>
+        <result property="intro" column="intro"/>
+        <result property="status" column="status"/>
+        <collection property="steps" ofType="com.zono.chefshug.model.Step">
+            <result property="order" column="step_order"/>
+            <result property="content" column="step_content"/>
+        </collection>
+        <collection property="ingredients" ofType="com.zono.chefshug.model.Ingredient">
+            <result property="order" column="ingredient_order"/>
+            <result property="name" column="ingredient_name"/>
+            <result property="quantity" column="ingredient_quantity"/>
+            <result property="uom" column="ingredient_uom"/>
+        </collection>
+    </resultMap>
+
+
+    <select id="listRecipes" resultMap="recipeResultMap">
+        SELECT r.recipe_id, r.variation_id, r.submission_date,
+                r.name, r.intro, r.status,
+                s.step_order, i.ingredient_order,
+                i.quantity AS ingredient_quantity,
+                CONVERT (s.description USING utf8) AS step_content,
+                i.name AS ingredient_name, i.uom AS ingredient_uom
+          FROM chefshug.recipes r
+          LEFT OUTER JOIN chefshug.steps s  
+            ON r.recipe_id = s.recipe_id AND r.variation_id = s.variation_id
+          LEFT OUTER JOIN chefshug.ingredients i  
+            ON r.recipe_id = i.recipe_id AND r.variation_id = i.variation_id
+         ORDER BY s.step_order
+    </select>
+
+    <select id="getRecipe" resultMap="recipeResultMap">
+        SELECT r.recipe_id, r.variation_id, r.submission_date,
+                r.name, r.intro, r.status,
+                s.step_order, i.ingredient_order,
+                i.quantity AS ingredient_quantity,
+                CONVERT (s.description USING utf8) AS step_content,
+                i.name AS ingredient_name, i.uom AS ingredient_uom
+          FROM chefshug.recipes r
+          LEFT OUTER JOIN chefshug.steps s  
+            ON r.recipe_id = s.recipe_id AND r.variation_id = s.variation_id
+          LEFT OUTER JOIN chefshug.ingredients i  
+            ON r.recipe_id = i.recipe_id AND r.variation_id = i.variation_id
+          WHERE r.recipe_id = #{id}
+         ORDER BY s.step_order
+    </select>
+
+</mapper>
