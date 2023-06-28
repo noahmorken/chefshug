@@ -54,4 +54,20 @@
          ORDER BY s.step_order
     </select>
 
+    <insert id="addRecipe">
+         INSERT INTO recipes (variation_id, submission_date, name, intro, status)
+            VALUES (#{recipe.variation}, CURRENT_DATE(), #{recipe.name}, #{recipe.intro}, #{recipe.status})
+    </insert>
+
+    <insert id="addIngredient">
+         INSERT INTO ingredients (recipe_id, variation_id, ingredient_order, name, quantity, uom)
+            VALUES (#{recipe.id}, #{recipe.variation}, #{ingredient.order}, #{ingredient.name},
+                #{ingredient.quantity}, #{ingredient.uom})
+    </insert>
+
+    <insert id="addStep" parameterType="com.zono.chefshug.model.Step">
+         INSERT INTO steps (recipe_id, variation_id, step_order, description)
+            VALUES (#{recipe.id}, #{recipe.variation}, #{step.order}, #{step.content})
+    </insert>
+
 </mapper>

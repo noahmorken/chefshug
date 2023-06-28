@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zono.chefshug.model.Recipe;
@@ -37,6 +39,12 @@ public class RecipeController {
     @ResponseBody
     public Recipe getRecipe(@PathVariable("id") int id) {
         return recipeService.getRecipe(id);
+    }
+
+    @PostMapping("/add")
+    @ResponseBody
+    public void addRecipe(@RequestBody Recipe recipe) {
+        recipeService.addRecipe(recipe);
     }
 
 }
