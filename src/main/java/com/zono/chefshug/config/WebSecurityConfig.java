@@ -36,31 +36,33 @@ public class WebSecurityConfig {
         return new InMemoryUserDetailsManager(user);
     }
 
-	@Bean
-	CorsConfigurationSource corsConfigurationSource() {
-		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(Arrays.asList("*"));
-		configuration.setAllowedMethods(Arrays.asList("GET","POST"));
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", configuration);
-		return source;
-	}
+	// @Bean
+	// CorsConfigurationSource corsConfigurationSource() {
+	// 	CorsConfiguration configuration = new CorsConfiguration();
+	// 	configuration.setAllowedOrigins(Arrays.asList("*"));
+	// 	configuration.setAllowedMethods(Arrays.asList("GET","POST","HEAD","OPTIONS"));
+	// 	UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+	// 	source.registerCorsConfiguration("/**", configuration);
+	// 	return source;
+	// }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(
-                (csrf) -> csrf.disable()
-            )
-			.authorizeHttpRequests((requests) -> requests
-				.requestMatchers("/", "/home", "/recipe/*").permitAll()
-				.anyRequest().authenticated()
-			)
-            .formLogin((form) -> form
-				.loginPage("/login")
-				.permitAll()
-            )
-            .logout((logout) -> logout.permitAll())
-            .cors(withDefaults());
+        http.csrf().disable().authorizeRequests().anyRequest().permitAll();
+
+        // http.csrf(
+        //         (csrf) -> csrf.disable()
+        //     )
+		// 	.authorizeHttpRequests((requests) -> requests
+		// 		.requestMatchers("/", "/home", "/recipe/*").permitAll()
+		// 		.anyRequest().authenticated()
+		// 	)
+        //     .formLogin((form) -> form
+		// 		.loginPage("/login")
+		// 		.permitAll()
+        //     )
+        //     .logout((logout) -> logout.permitAll())
+        //     .cors(withDefaults());
 
 // .formLogin(withDefaults());        
 //             .authorizeRequests()

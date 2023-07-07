@@ -5,7 +5,7 @@
 
     <resultMap id="recipeResultMap" type="com.zono.chefshug.model.Recipe">
         <id property="id" column="recipe_id" />
-        <result property="variation" column="variation"/>
+        <result property="variation" column="variation_id"/>
         <result property="date" column="submission_date"/>
         <result property="name" column="name"/>
         <result property="intro" column="intro"/>
@@ -35,7 +35,7 @@
             ON r.recipe_id = s.recipe_id AND r.variation_id = s.variation_id
           LEFT OUTER JOIN chefshug.ingredients i  
             ON r.recipe_id = i.recipe_id AND r.variation_id = i.variation_id
-         ORDER BY s.step_order
+          ORDER BY r.recipe_id, s.step_order
     </select>
 
     <select id="getRecipe" resultMap="recipeResultMap">
@@ -54,7 +54,7 @@
          ORDER BY s.step_order
     </select>
 
-    <insert id="addRecipe">
+    <insert id="addRecipe" useGeneratedKeys="true" keyProperty="recipe.id" keyColumn="recipe_id">
          INSERT INTO recipes (variation_id, submission_date, name, intro, status)
             VALUES (#{recipe.variation}, CURRENT_DATE(), #{recipe.name}, #{recipe.intro}, #{recipe.status})
     </insert>
