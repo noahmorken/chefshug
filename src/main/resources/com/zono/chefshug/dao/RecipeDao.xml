@@ -10,6 +10,7 @@
         <result property="name" column="name"/>
         <result property="intro" column="intro"/>
         <result property="status" column="status"/>
+        <result property="url" column="url"/>
         <collection property="steps" ofType="com.zono.chefshug.model.Step">
             <result property="order" column="step_order"/>
             <result property="content" column="step_content"/>
@@ -26,6 +27,7 @@
     <select id="listRecipes" resultMap="recipeResultMap">
         SELECT r.recipe_id, r.variation_id, r.submission_date,
                 r.name, r.intro, r.status,
+                COALESCE(r.url, concat('/info/',r.recipe_id)) AS url,
                 s.step_order, i.ingredient_order,
                 i.quantity AS ingredient_quantity,
                 CONVERT (s.description USING utf8) AS step_content,
@@ -41,6 +43,7 @@
     <select id="getRecipe" resultMap="recipeResultMap">
         SELECT r.recipe_id, r.variation_id, r.submission_date,
                 r.name, r.intro, r.status,
+                COALESCE(r.url, concat('/info/',r.recipe_id)) AS url,
                 s.step_order, i.ingredient_order,
                 i.quantity AS ingredient_quantity,
                 CONVERT (s.description USING utf8) AS step_content,
@@ -55,8 +58,8 @@
     </select>
 
     <insert id="addRecipe" useGeneratedKeys="true" keyProperty="recipe.id" keyColumn="recipe_id">
-         INSERT INTO recipes (variation_id, submission_date, name, intro, status)
-            VALUES (#{recipe.variation}, CURRENT_DATE(), #{recipe.name}, #{recipe.intro}, #{recipe.status})
+         INSERT INTO recipes (variation_id, submission_date, name, intro, status, url)
+            VALUES (#{recipe.variation}, CURRENT_DATE(), #{recipe.name}, #{recipe.intro}, #{recipe.status}, #{recipe.url})
     </insert>
 
     <insert id="addIngredient">

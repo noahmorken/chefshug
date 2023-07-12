@@ -19,6 +19,8 @@ public class Recipe {
 
     private Integer status;
 
+    private String url;
+
     private List<Step> steps;
 
     private List<Ingredient> ingredients;
