@@ -13,7 +13,7 @@ public class Ingredient {
     private String name;
 
     @JsonProperty("ingredient_quantity")
-    private Float quantity;
+    private String quantity;
 
     @JsonProperty("ingredient_uom")
     private String uom;

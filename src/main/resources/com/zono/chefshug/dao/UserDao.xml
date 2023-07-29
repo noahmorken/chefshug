@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zono.chefshug.dao.UserDao">
+
+    <resultMap id="userResultMap" type="com.zono.chefshug.model.User">
+        <id property="id" column="user_id" />
+        <result property="username" column="username"/>
+        <result property="email" column="email"/>
+        <result property="password" column="password"/>
+    </resultMap>
+
+    <select id="loginUser" resultMap="userResultMap">
+        SELECT * FROM users WHERE username=#{user.username} AND password=#{user.password}
+    </select>
+
+    <insert id="registerUser" useGeneratedKeys="true" keyProperty="user.id" keyColumn="user_id">
+        INSERT INTO users (username, email, password)
+            VALUES (#{user.username}, #{user.email}, #{user.password})
+    </insert>
+
+</mapper>

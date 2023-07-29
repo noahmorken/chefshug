@@ -17,5 +17,9 @@ public interface RecipeDao {
     void addRecipe(@Param("recipe") Recipe recipe);
     void addIngredient(@Param("recipe") Recipe recipe, @Param("ingredient") Ingredient ingredient);
     void addStep(Recipe recipe, Step step);
+    void updateRecipe(@Param("recipe") Recipe recipe);
+    void deleteIngredient(@Param("recipe_id") Integer recipeId);
+    void deleteStep(@Param("recipe_id") Integer recipeId);
+    void deleteRecipe(@Param("recipe_id") Integer recipeId);
 
 }

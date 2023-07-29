@@ -23,7 +23,7 @@ public class RecipeService {
     private RecipeDao dao;
 
     public List<Recipe> listRecipes() {
-        // Map<String, String> map = new HashMap<>();
+        // Map<String, String> map = new HaashMap<>();
         // map.put("hello","world");
         // return map;
         return dao.listRecipes();
@@ -35,6 +35,9 @@ public class RecipeService {
 
     @Transactional
     public void addRecipe(Recipe recipe) {
+        if ("".equals(recipe.getUrl())) {
+            recipe.setUrl(null);
+        }
         dao.addRecipe(recipe);
         for(Ingredient ingredient: recipe.getIngredients()) {
             dao.addIngredient(recipe, ingredient);
@@ -42,5 +45,23 @@ public class RecipeService {
         for(Step step: recipe.getSteps()) {
             dao.addStep(recipe, step);
         }
+    }
+
+    @Transactional
+    public void updateRecipe(Recipe recipe) {
+        dao.deleteIngredient(recipe.getId());
+        dao.deleteStep(recipe.getId());
+        dao.updateRecipe(recipe);
+        for(Ingredient ingredient: recipe.getIngredients()) {
+            dao.addIngredient(recipe, ingredient);
+        }
+        for(Step step: recipe.getSteps()) {
+            dao.addStep(recipe, step);
+        }
+    }
+
+    @Transactional
+    public void deleteRecipe(Integer recipeId) {
+        dao.deleteRecipe(recipeId);
     }
 }

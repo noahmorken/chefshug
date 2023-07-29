@@ -17,45 +17,28 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.zono.chefshug.model.Recipe;
-import com.zono.chefshug.service.RecipeService;
+import com.zono.chefshug.model.User;
+import com.zono.chefshug.service.UserService;
 
 
 @Controller
 @CrossOrigin
-@RequestMapping(path = "/recipe")
-public class RecipeController {
+@RequestMapping(path = "/user")
+public class UserController {
 
     @Autowired
-    private RecipeService recipeService;
+    private UserService userService;
 
-    @GetMapping("/list")
+    @GetMapping("/login")
     @ResponseBody
-    public List<Recipe> listRecipes(Model model) {
-        return recipeService.listRecipes();
+    public void loginUser(@PathVariable User user) {
+        userService.loginUser(user);
     }
 
-    @GetMapping("/{id}")
+    @PostMapping("/register")
     @ResponseBody
-    public Recipe getRecipe(@PathVariable("id") int id) {
-        return recipeService.getRecipe(id);
+    public void registerUser(@RequestBody User user) {
+        userService.registerUser(user);
     }
-
-    @PostMapping("/add")
-    @ResponseBody
-    public void addRecipe(@RequestBody Recipe recipe) {
-        recipeService.addRecipe(recipe);
-    }
-
-    @PutMapping("/update")
-    @ResponseBody
-    public void updateRecipe(@RequestBody Recipe recipe) {
-        recipeService.updateRecipe(recipe);
-    }
-
-    @DeleteMapping("/delete")
-    @ResponseBody
-    public void deleteRecipe(@RequestParam Integer recipeId) {
-        recipeService.deleteRecipe(recipeId);
-    }
+    
 }
