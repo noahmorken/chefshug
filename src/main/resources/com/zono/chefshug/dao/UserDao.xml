@@ -10,8 +10,20 @@
         <result property="password" column="password"/>
     </resultMap>
 
-    <select id="loginUser" resultMap="userResultMap">
-        SELECT * FROM users WHERE username=#{user.username} AND password=#{user.password}
+    <select id="findById" resultType="com.zono.chefshug.model.User">
+        SELECT * FROM users WHERE id=#{id}
+    </select>
+
+    <select id="findByUsername" resultType="com.zono.chefshug.model.User">
+        SELECT * FROM users WHERE username=#{username}
+    </select>
+
+    <select id="existsByUsername" resultType="boolean">
+        SELECT CASE WHEN COUNT(*) > 0 THEN true ELSE false END FROM users WHERE username=#{username}
+    </select>
+
+    <select id="existsByEmail" resultType="boolean">
+        SELECT CASE WHEN COUNT(*) > 0 THEN true ELSE false END FROM users WHERE email=#{email}
     </select>
 
     <insert id="registerUser" useGeneratedKeys="true" keyProperty="user.id" keyColumn="user_id">
