@@ -36,7 +36,7 @@ import com.zono.chefshug.security.services.UserDetailsImpl;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
-  @Autowired
+  /* @Autowired
   AuthenticationManager authenticationManager;
 
   @Autowired
@@ -125,5 +125,5 @@ public class AuthController {
     userRepository.save(user);
 
     return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
-  }
+  } */
 }
