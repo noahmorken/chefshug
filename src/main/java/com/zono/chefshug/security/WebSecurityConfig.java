@@ -20,6 +20,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -108,6 +109,8 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
     http.authenticationProvider(authenticationProvider());
 
     http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+
+    http.headers().frameOptions().disable();
     
     return http.build();
   }
@@ -115,7 +118,8 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
 	// @Bean
 	// public CorsConfigurationSource corsConfigurationSource() {
 	// 	CorsConfiguration configuration = new CorsConfiguration();
-	// 	configuration.setAllowedOriginPatterns(Arrays.asList("http://localhost:[*]"));
+	// 	//configuration.setAllowedOriginPatterns(Arrays.asList("http://localhost:[*]"));
+  //   configuration.setAllowedOrigins(List.of("*"));
 	// 	configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE","OPTIONS"));
 	// 	UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 	// 	source.registerCorsConfiguration("/**", configuration);

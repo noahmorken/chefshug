@@ -21,6 +21,8 @@ public class Recipe {
 
     private String url;
 
+    private String externalContent;
+
     private List<Step> steps;
 
     private List<Ingredient> ingredients;
